@@ -188,9 +188,12 @@ h1 {
   }
   .action-btn {
     width: 100px;
-    height: 600px;
+    height: 36px; /* исправлено */
     font-size: 13px;
   }
+}
+
+/* Шапка сайта */
 .site-header {
   max-width: 500px;
   margin: 0 auto 32px;
@@ -198,7 +201,7 @@ h1 {
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  background: rgba(0, 0, 0, 0.75); /* чуть темнее остального сайта */
+  background: rgba(0, 0, 0, 0.75);
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
@@ -207,23 +210,24 @@ h1 {
   display: flex;
   align-items: center;
   gap: 12px;
-  overflow: hidden; /* чтобы логотип не вылезал за рамки */
+  overflow: hidden;
 }
 
 .logo img {
   width: 40px;
   height: 40px;
+  max-height: 40px;
   object-fit: cover;
-  border-radius: 8px; /* слегка скругляем иконку */
+  border-radius: 8px;
 }
 
 .site-title {
   font-size: 20px;
-  font-weight: 900; /* жирное название */
+  font-weight: 900;
   color: #e5e7eb;
-  white-space: nowrap; /* название не переносится */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* если название длинное — покажет ... */
+  text-overflow: ellipsis;
 }
 
 .site-nav button {
@@ -240,6 +244,4 @@ h1 {
 
 .site-nav button:hover {
   filter: brightness(1.05);
-}
-
 }
