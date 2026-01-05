@@ -191,31 +191,39 @@ h1 {
     height: 600px;
     font-size: 13px;
   }
-  .site-header {
+.site-header {
   max-width: 500px;
   margin: 0 auto 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
+  padding: 16px 20px;
+  background: rgba(0, 0, 0, 0.75); /* чуть темнее остального сайта */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
+  overflow: hidden; /* чтобы логотип не вылезал за рамки */
 }
 
 .logo img {
   width: 40px;
   height: 40px;
-  border-radius: 8px; /* если нужно слегка скруглить логотип */
+  object-fit: cover;
+  border-radius: 8px; /* слегка скругляем иконку */
 }
 
 .site-title {
   font-size: 20px;
   font-weight: 900; /* жирное название */
   color: #e5e7eb;
+  white-space: nowrap; /* название не переносится */
+  overflow: hidden;
+  text-overflow: ellipsis; /* если название длинное — покажет ... */
 }
 
 .site-nav button {
