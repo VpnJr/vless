@@ -15,18 +15,27 @@ const firebaseConfig = {
 /* ===== Init Firebase ===== */
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
 const auth = getAuth();
 signInAnonymously(auth).catch(console.error);
 
 /* ===== VPN KEYS ===== */
 const vpnList = document.getElementById("vpn-list");
 
-async function loadKeys() {
-  vpnList.innerHTML = "";
+function showSkeleton(count = 3) {
+  vpnList.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const skeleton = document.createElement("div");
+    skeleton.className = "card";
+    skeleton.innerHTML = `<div class="skeleton"></div>`;
+    vpnList.appendChild(skeleton);
+  }
+}
 
+async function loadKeys() {
+  showSkeleton();
   const q = query(collection(db, "vpn_keys"), orderBy("createdAt", "asc"));
   const snapshot = await getDocs(q);
+  vpnList.innerHTML = '';
 
   if (snapshot.empty) {
     vpnList.textContent = "Ключей пока нет";
@@ -51,12 +60,11 @@ async function loadKeys() {
 
     btn.onclick = async () => {
       await navigator.clipboard.writeText(data.key);
-      btn.textContent = "Скопировано";
+      btn.textContent = "✓";
       btn.classList.add("success");
-
       setTimeout(() => {
         btn.textContent = "Скопировать";
-        btn.classList.remove("Скопировано");
+        btn.classList.remove("success");
       }, 1200);
     };
 
@@ -76,11 +84,21 @@ async function loadKeys() {
 /* ===== APPS ===== */
 const appsList = document.getElementById("apps-list");
 
-async function loadApps() {
-  appsList.innerHTML = "";
+function showAppSkeleton(count = 3) {
+  appsList.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const skeleton = document.createElement("div");
+    skeleton.className = "app-card";
+    skeleton.innerHTML = `<div class="skeleton" style="height:40px;"></div>`;
+    appsList.appendChild(skeleton);
+  }
+}
 
+async function loadApps() {
+  showAppSkeleton();
   const q = query(collection(db, "apps"), orderBy("order", "asc"));
   const snapshot = await getDocs(q);
+  appsList.innerHTML = '';
 
   if (snapshot.empty) {
     appsList.textContent = "Приложения не найдены";
@@ -109,7 +127,15 @@ async function loadApps() {
     const btn = document.createElement("button");
     btn.className = "action-btn";
     btn.textContent = "Скачать";
-    btn.onclick = () => window.open(app.url, "_blank");
+    btn.onclick = () => {
+      btn.textContent = "✔️";
+      btn.classList.add("success");
+      window.open(app.url, "_blank");
+      setTimeout(() => {
+        btn.textContent = "Скачать";
+        btn.classList.remove("success");
+      }, 1200);
+    };
 
     card.appendChild(icon);
     card.appendChild(info);
