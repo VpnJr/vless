@@ -31,11 +31,11 @@ h1 {
   background: linear-gradient(180deg, #020617, #020617dd);
   border: 1px solid #475569;
   border-radius: 16px;
-  padding: 14px 16px;
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  transition: transform .15s ease, box-shadow .15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
@@ -52,7 +52,7 @@ h1 {
 
 .card-top h3 {
   margin: 0;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -61,13 +61,28 @@ h1 {
   color: #94a3b8;
 }
 
-/* ===== универсальная кнопка ===== */
+/* ===== Skeleton ===== */
+.skeleton {
+  background: #47556933;
+  border-radius: 12px;
+  height: 20px;
+  width: 100%;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+
+/* ===== Кнопки ===== */
 .action-btn {
-  width: 200px;
-  height: 44px;
+  width: 120px;
+  height: 36px;
   border-radius: 12px;
   border: none;
-  font-size: 18px;
+  font-size: 14px;
   cursor: pointer;
   background: linear-gradient(135deg, #7dd3fc, #60a5fa);
   color: #020617;
@@ -75,15 +90,15 @@ h1 {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: all .15s ease;
+  transition: all .2s ease;
 }
 
 .action-btn:hover {
-  filter: brightness(1.05);
+  filter: brightness(1.1);
 }
 
 .action-btn:active {
-  transform: scale(.92);
+  transform: scale(.95);
 }
 
 .action-btn.success {
@@ -129,7 +144,7 @@ h1 {
 }
 
 .app-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.02);
   box-shadow: 0 18px 40px rgba(0,0,0,.45);
 }
 
@@ -161,9 +176,17 @@ h1 {
   color: #94a3b8;
 }
 
-/* ===== мобильные ===== */
+/* ===== Мобильные ===== */
 @media (max-width: 640px) {
   h1 {
     font-size: 22px;
+  }
+  .card-top h3 {
+    font-size: 14px;
+  }
+  .action-btn {
+    width: 100px;
+    height: 32px;
+    font-size: 13px;
   }
 }
