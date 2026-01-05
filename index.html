@@ -4,35 +4,20 @@
 <meta charset="UTF-8">
 <title>VLESS Keys</title>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <style>
 body { background:#0b1b33; color:#fff; font-family:sans-serif; }
 .card { background:#12284a; padding:15px; margin:10px auto; max-width:500px; border-radius:10px; }
-button { padding:8px 12px; margin-top:5px; }
-.admin { border:1px solid #3fa9f5; }
+button { padding:10px; width:100%; }
 </style>
 </head>
 <body>
 
 <h2 align="center">VLESS серверы</h2>
-<div align="center">
-<button onclick="login()">Войти</button>
-<button onclick="logout()">Выйти</button>
-</div>
-
-<div id="admin" style="display:none" class="card admin">
-<h3>Добавить сервер</h3>
-<input id="name" placeholder="Название"><br>
-<input id="key" placeholder="VLESS ключ"><br>
-<button onclick="add()">Добавить</button>
-</div>
-
 <div id="list"></div>
 
 <script>
 const firebaseConfig = {
-
   apiKey: "AIzaSyDyHRXgmRKT2Pm4P4T5PaGERY1aq6l5yr4",
 
   authDomain: "vless-panel.firebaseapp.com",
@@ -48,39 +33,23 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
 const db = firebase.firestore();
 
-auth.onAuthStateChanged(u=>{
-  document.getElementById('admin').style.display = u ? 'block':'none';
-});
-
-function login(){
-  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-}
-function logout(){ auth.signOut(); }
-
-function add(){
-  db.collection("servers").add({
-    name: name.value,
-    key: key.value,
-    date: new Date().toLocaleString()
-  });
-}
-
-db.collection("servers").onSnapshot(snap=>{
+db.collection("servers").orderBy("date","desc").onSnapshot(snap=>{
   list.innerHTML='';
   snap.forEach(d=>{
     let x=d.data();
     list.innerHTML+=`
     <div class="card">
       <b>${x.name}</b><br>
-      ${x.date}<br>
-      <button onclick="navigator.clipboard.writeText('${x.key}')">Скопировать ключ</button>
-      ${auth.currentUser?`<br><button onclick="db.collection('servers').doc('${d.id}').delete()">Удалить</button>`:''}
+      ${x.date}<br><br>
+      <button onclick="navigator.clipboard.writeText('${x.key}')">
+        Скопировать ключ
+      </button>
     </div>`;
   });
 });
 </script>
+
 </body>
 </html>
