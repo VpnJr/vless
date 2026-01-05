@@ -114,7 +114,11 @@ async function loadApps() {
     // Добавляем иконку приложения
     const appIcon = document.createElement("div");
     appIcon.className = "app-icon";
-    appIcon.innerHTML = app.icon ?? "📦"; // Если нет иконки, показываем 📦
+    if (app.icon) {
+      appIcon.innerHTML = `<img src="${app.icon}" alt="${app.name}">`;
+    } else {
+      appIcon.textContent = "📦";
+    }
 
     // Добавляем информацию о приложении
     const appInfo = document.createElement("div");
