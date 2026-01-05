@@ -128,15 +128,18 @@ h1 {
 }
 /* ===== адаптация под мобильные ===== */
 @media (max-width: 640px) {
-
-  body {
-    padding: 24px 12px 60px;
+  .apps-list {
+    grid-template-columns: 1fr;
   }
 
-  h1 {
-    font-size: 22px;
-    margin-bottom: 24px;
+  .app-card {
+    padding: 16px;
   }
+
+  .app-name {
+    font-size: 16px;
+  }
+}
 
   .card {
     flex-direction: column;
