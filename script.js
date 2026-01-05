@@ -55,8 +55,8 @@ async function loadKeys() {
       btn.classList.add("success");
 
       setTimeout(() => {
-        btn.textContent = "📋";
-        btn.classList.remove("success");
+        btn.textContent = "Скопировать";
+        btn.classList.remove("Скопировано");
       }, 1200);
     };
 
@@ -108,7 +108,7 @@ async function loadApps() {
 
     const btn = document.createElement("button");
     btn.className = "action-btn";
-    btn.textContent = "⬇️";
+    btn.textContent = "Скачать";
     btn.onclick = () => window.open(app.url, "_blank");
 
     card.appendChild(icon);
