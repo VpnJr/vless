@@ -30,12 +30,13 @@ h1 {
   background: linear-gradient(180deg, #020617, #020617dd);
   border: 1px solid #475569;
   border-radius: 16px;
-  padding: 20px;
+  padding: 14px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 14px;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+
 
 .card:hover {
   transform: translateY(-2px);
@@ -43,27 +44,28 @@ h1 {
 }
 
 .card-info h3 {
-  margin: 0 0 6px;
-  font-size: 18px;
-  font-weight: 500;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .date {
-  font-size: 13px;
-  color: #cbd5f5;
+  font-size: 12px;
+  color: #94a3b8;
 }
 
 /* ===== кнопка копирования ===== */
 .copy-btn {
-  background: linear-gradient(135deg, #60a5fa, #3b82f6);
-  border: none;
-  color: #020617;
-  padding: 10px 16px;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
+  border: none;
+  font-size: 18px;
+  background: linear-gradient(135deg, #7dd3fc, #60a5fa);
+  color: #020617;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.15s ease;
+  flex-shrink: 0;
+  transition: all .15s ease;
 }
 
 .copy-btn:hover {
@@ -71,7 +73,7 @@ h1 {
 }
 
 .copy-btn:active {
-  transform: scale(0.96);
+  transform: scale(.92);
 }
 
 .copy-btn.copied {
