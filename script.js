@@ -47,11 +47,11 @@ async function loadKeys() {
 
     const btn = document.createElement("button");
     btn.className = "action-btn";
-    btn.textContent = "📋";
+    btn.textContent = "Скопировать";
 
     btn.onclick = async () => {
       await navigator.clipboard.writeText(data.key);
-      btn.textContent = "✓";
+      btn.textContent = "Скопировано";
       btn.classList.add("success");
 
       setTimeout(() => {
