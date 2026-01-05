@@ -4,9 +4,9 @@
 
 body {
   margin: 0;
-  padding: 40px 16px;
+  padding: 40px 16px 80px;
   font-family: Inter, Arial, sans-serif;
-  background: radial-gradient(1200px 600px at top, #1e293b, #020617);
+  background: linear-gradient(180deg, #0f172a, #020617);
   color: #e5e7eb;
 }
 
@@ -16,17 +16,19 @@ h1 {
   font-weight: 600;
 }
 
+/* ===== список ключей ===== */
+
 #vpn-list {
-  max-width: 700px;
+  max-width: 720px;
   margin: 0 auto;
   display: grid;
   gap: 16px;
 }
 
 .card {
-  background: linear-gradient(180deg, #020617, #020617cc);
-  border: 1px solid #1e293b;
-  border-radius: 14px;
+  background: linear-gradient(180deg, #020617, #020617ee);
+  border: 1px solid #334155;
+  border-radius: 16px;
   padding: 20px;
   display: flex;
   justify-content: space-between;
@@ -36,39 +38,89 @@ h1 {
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
 .card-info h3 {
   margin: 0 0 6px;
   font-size: 18px;
+  font-weight: 500;
 }
 
 .date {
   font-size: 13px;
-  color: #94a3b8;
+  color: #cbd5f5;
 }
 
+/* ===== кнопка копирования ===== */
+
 .copy-btn {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
   border: none;
-  color: white;
-  padding: 10px 14px;
-  border-radius: 10px;
+  color: #020617;
+  padding: 10px 16px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
-  transition: opacity 0.15s ease, transform 0.1s ease;
+  font-weight: 600;
+  transition: all 0.15s ease;
 }
 
 .copy-btn:hover {
-  opacity: 0.9;
+  filter: brightness(1.05);
 }
 
 .copy-btn:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 .copy-btn.copied {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  color: #022c22;
+}
+
+/* ===== блок скачивания ===== */
+
+.downloads {
+  max-width: 720px;
+  margin: 60px auto 0;
+  padding: 24px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #020617, #020617cc);
+  border: 1px solid #334155;
+  text-align: center;
+}
+
+.downloads h2 {
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.downloads p {
+  margin: 0 0 20px;
+  color: #cbd5f5;
+  font-size: 14px;
+}
+
+.download-buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.download-btn {
+  padding: 12px 18px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  color: #020617;
+  background: linear-gradient(135deg, #e5e7eb, #cbd5f5);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
