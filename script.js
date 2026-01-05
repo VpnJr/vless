@@ -1,5 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, getDocs, query, orderBy } 
+import { query, orderBy } 
+
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // 🔴 ВСТАВЬ СВОИ ДАННЫЕ FIREBASE
@@ -64,5 +66,43 @@ async function loadKeys() {
     vpnList.appendChild(card);
   });
 }
+
+const appsList = document.getElementById("apps-list");
+
+async function loadApps() {
+  const q = query(
+    collection(db, "apps"),
+    orderBy("order", "asc")
+  );
+
+  const snapshot = await getDocs(q);
+  appsList.innerHTML = "";
+
+  if (snapshot.empty) {
+    appsList.innerHTML = "Приложения не найдены";
+    return;
+  }
+
+  snapshot.forEach(doc => {
+    const app = doc.data();
+
+    const a = document.createElement("a");
+    a.className = "app-card";
+    a.href = app.url;
+    a.target = "_blank";
+
+    a.innerHTML = `
+      <div class="app-icon">${app.icon ?? "📦"}</div>
+      <div class="app-info">
+        <div class="app-name">${app.name}</div>
+        <div class="app-platform">${app.platform}</div>
+      </div>
+    `;
+
+    appsList.appendChild(a);
+  });
+}
+
+loadApps();
 
 loadKeys();
