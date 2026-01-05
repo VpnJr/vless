@@ -16,15 +16,17 @@ input, button { width:100%; padding:8px; margin-top:5px; }
 
 <h2 align="center">Админка</h2>
 
-<div align="center">
-<button onclick="login()">Войти</button>
-<button onclick="logout()">Выйти</button>
+<div class="card">
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Пароль">
+  <button onclick="login()">Войти</button>
+  <button onclick="logout()">Выйти</button>
 </div>
 
 <div id="admin" style="display:none" class="card">
-<input id="name" placeholder="Название сервера">
-<input id="key" placeholder="VLESS ключ">
-<button onclick="add()">Добавить</button>
+  <input id="name" placeholder="Название сервера">
+  <input id="key" placeholder="VLESS ключ">
+  <button onclick="add()">Добавить</button>
 </div>
 
 <div id="list"></div>
@@ -48,13 +50,15 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-auth.onAuthStateChanged(u=>{
-  admin.style.display = u ? 'block' : 'none';
+auth.onAuthStateChanged(user => {
+  admin.style.display = user ? 'block' : 'none';
 });
 
 function login(){
-  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  auth.signInWithEmailAndPassword(email.value, password.value)
+    .catch(e => alert(e.message));
 }
+
 function logout(){
   auth.signOut();
 }
@@ -72,13 +76,13 @@ db.collection("servers").onSnapshot(snap=>{
   snap.forEach(d=>{
     let x=d.data();
     list.innerHTML+=`
-    <div class="card">
-      <b>${x.name}</b><br>
-      ${x.date}<br><br>
-      <button onclick="db.collection('servers').doc('${d.id}').delete()">
-        Удалить
-      </button>
-    </div>`;
+      <div class="card">
+        <b>${x.name}</b><br>
+        ${x.date}<br><br>
+        <button onclick="db.collection('servers').doc('${d.id}').delete()">
+          Удалить
+        </button>
+      </div>`;
   });
 });
 </script>
