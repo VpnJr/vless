@@ -34,7 +34,7 @@ async function loadKeys() {
 
   const q = query(
     collection(db, "vpn_keys"),
-    orderBy("createdAt", "desc")
+    orderBy("createdAt", "asc")
   );
 
   const snapshot = await getDocs(q);
