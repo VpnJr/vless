@@ -1,20 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const auth = getAuth();
-signInAnonymously(auth)
-  .then(() => {
-    console.log("Пользователь анонимно вошел в систему");
-  })
-  .catch((error) => {
-    console.error("Ошибка входа:", error);
-  });
+import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"; // Импортируйте getAuth и signInAnonymously
 
 // 🔴 ВСТАВЬ СВОИ ДАННЫЕ FIREBASE
 const firebaseConfig = {
@@ -26,11 +12,23 @@ const firebaseConfig = {
   appId: "1:49665298978:web:4f5d9de2f269a19a10307b"
 };
 
+// Инициализация Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Инициализация анонимного входа
+const auth = getAuth();
+signInAnonymously(auth)
+  .then(() => {
+    console.log("Пользователь анонимно вошел в систему");
+  })
+  .catch((error) => {
+    console.error("Ошибка входа:", error);
+  });
+
 const vpnList = document.getElementById("vpn-list");
 
+// Функция для загрузки VPN ключей
 async function loadKeys() {
   vpnList.innerHTML = "";
 
@@ -81,40 +79,7 @@ async function loadKeys() {
 
 const appsList = document.getElementById("apps-list");
 
-async function loadApps() {
-  const q = query(
-    collection(db, "apps"),
-    orderBy("order", "asc")
-  );
-
-  const snapshot = await getDocs(q);
-  appsList.innerHTML = "";
-
-  if (snapshot.empty) {
-    appsList.innerHTML = "Приложения не найдены";
-    return;
-  }
-
-  snapshot.forEach(doc => {
-    const app = doc.data();
-
-    const a = document.createElement("a");
-    a.className = "app-card";
-    a.href = app.url;
-    a.target = "_blank";
-
-    a.innerHTML = `
-      <div class="app-icon">${app.icon ?? "📦"}</div>
-      <div class="app-info">
-        <div class="app-name">${app.name}</div>
-        <div class="app-platform">${app.platform}</div>
-      </div>
-    `;
-
-    appsList.appendChild(a);
-  });
-}
-
+// Функция для загрузки приложений
 async function loadApps() {
   const q = query(
     collection(db, "apps"),
@@ -169,4 +134,6 @@ async function loadApps() {
   });
 }
 
+// Загружаем ключи и приложения
 loadKeys();
+loadApps();
