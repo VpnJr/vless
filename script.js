@@ -115,6 +115,58 @@ async function loadApps() {
   });
 }
 
-loadApps();
+async function loadApps() {
+  const q = query(
+    collection(db, "apps"),
+    orderBy("order", "asc")
+  );
+
+  const snapshot = await getDocs(q);
+  appsList.innerHTML = "";
+
+  if (snapshot.empty) {
+    appsList.innerHTML = "Приложения не найдены";
+    return;
+  }
+
+  snapshot.forEach(doc => {
+    const app = doc.data();
+    console.log(app); // Логируем каждое приложение
+
+    const card = document.createElement("div");
+    card.className = "app-card";
+
+    // Создаем кнопку "Скачать"
+    const downloadBtn = document.createElement("button");
+    downloadBtn.className = "download-btn";
+    downloadBtn.textContent = "Скачать";
+
+    // Когда пользователь нажимает на кнопку, открывается ссылка приложения
+    downloadBtn.onclick = () => {
+      window.open(app.url, "_blank"); // Открываем URL в новой вкладке
+    };
+
+    // Добавляем иконку приложения
+    const appIcon = document.createElement("div");
+    appIcon.className = "app-icon";
+    appIcon.innerHTML = app.icon ?? "📦"; // Если нет иконки, показываем 📦
+
+    // Добавляем информацию о приложении
+    const appInfo = document.createElement("div");
+    appInfo.className = "app-info";
+    appInfo.innerHTML = `
+      <div class="app-name">${app.name}</div>
+      <div class="app-platform">${app.platform}</div>
+    `;
+
+    // Добавляем все элементы на карточку
+    card.appendChild(appIcon);
+    card.appendChild(appInfo);
+    card.appendChild(downloadBtn);
+
+    // Добавляем карточку приложения в список
+    appsList.appendChild(card);
+  });
+}
 
 loadKeys();
