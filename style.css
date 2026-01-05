@@ -159,8 +159,10 @@ h1 {
 .app-icon img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover; /* чтобы картинка полностью покрывала квадрат */
+  border-radius: 12px; /* степень скругления */
 }
+
 
 .app-info {
   flex: 1;
@@ -189,4 +191,47 @@ h1 {
     height: 600px;
     font-size: 13px;
   }
+  .site-header {
+  max-width: 500px;
+  margin: 0 auto 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px; /* если нужно слегка скруглить логотип */
+}
+
+.site-title {
+  font-size: 20px;
+  font-weight: 900; /* жирное название */
+  color: #e5e7eb;
+}
+
+.site-nav button {
+  margin-left: 12px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #7dd3fc, #60a5fa);
+  color: #020617;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.site-nav button:hover {
+  filter: brightness(1.05);
+}
+
 }
