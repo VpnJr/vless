@@ -1,8 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy } 
-import { query, orderBy } 
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // 🔴 ВСТАВЬ СВОИ ДАННЫЕ FIREBASE
 const firebaseConfig = {
