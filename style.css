@@ -6,7 +6,9 @@ body {
   margin: 0;
   padding: 40px 16px 80px;
   font-family: Inter, Arial, sans-serif;
-  background: linear-gradient(180deg, #0f172a, #020617);
+  background:
+    radial-gradient(800px 400px at top, #1e3a8a, transparent),
+    linear-gradient(180deg, #0f172a, #020617);
   color: #e5e7eb;
 }
 
@@ -26,8 +28,8 @@ h1 {
 }
 
 .card {
-  background: linear-gradient(180deg, #020617, #020617ee);
-  border: 1px solid #334155;
+  background: linear-gradient(180deg, #020617, #020617dd);
+  border: 1px solid #475569;
   border-radius: 16px;
   padding: 20px;
   display: flex;
@@ -178,4 +180,7 @@ h1 {
     font-size: 15px;
   }
 }
-
+.downloads {
+  background: linear-gradient(180deg, #020617, #020617dd);
+  border: 1px solid #475569;
+}
