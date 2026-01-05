@@ -1,8 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"; // Импортируйте getAuth и signInAnonymously
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// 🔴 ВСТАВЬ СВОИ ДАННЫЕ FIREBASE
+// 🔴 Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDyHRXgmRKT2Pm4P4T5PaGERY1aq6l5yr4",
   authDomain: "vless-panel.firebaseapp.com",
@@ -12,39 +12,30 @@ const firebaseConfig = {
   appId: "1:49665298978:web:4f5d9de2f269a19a10307b"
 };
 
-// Инициализация Firebase
+// Init Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Инициализация анонимного входа
+// Anonymous auth
 const auth = getAuth();
-signInAnonymously(auth)
-  .then(() => {
-    console.log("Пользователь анонимно вошел в систему");
-  })
-  .catch((error) => {
-    console.error("Ошибка входа:", error);
-  });
+signInAnonymously(auth).catch(console.error);
+
+// ================= VPN KEYS =================
 
 const vpnList = document.getElementById("vpn-list");
 
-// Функция для загрузки VPN ключей
 async function loadKeys() {
   vpnList.innerHTML = "";
 
-  const q = query(
-    collection(db, "vpn_keys"),
-    orderBy("createdAt", "asc")
-  );
-
+  const q = query(collection(db, "vpn_keys"), orderBy("createdAt", "asc"));
   const snapshot = await getDocs(q);
 
   if (snapshot.empty) {
-    vpnList.innerHTML = "Ключей пока нет";
+    vpnList.textContent = "Ключей пока нет";
     return;
   }
 
-  snapshot.forEach((doc) => {
+  snapshot.forEach(doc => {
     const data = doc.data();
 
     const card = document.createElement("div");
@@ -52,119 +43,74 @@ async function loadKeys() {
 
     const btn = document.createElement("button");
     btn.className = "copy-btn";
-    btn.textContent = "Скопировать";
+    btn.textContent = "📋";
 
     btn.onclick = async () => {
       await navigator.clipboard.writeText(data.key);
-      btn.textContent = "Скопировано ✓";
-      btn.classList.add("copied");
-
-      setTimeout(() => {
-        btn.textContent = "Скопировать";
-        btn.classList.remove("copied");
-      }, 1500);
+      btn.textContent = "✓";
+      setTimeout(() => btn.textContent = "📋", 1200);
     };
 
-    card.innerHTML = `
-      <div class="card-info">
-        <h3>${data.name}</h3>
-        <div class="date">Добавлено: ${data.createdAt}</div>
-      </div>
+    const info = document.createElement("div");
+    info.className = "card-info";
+    info.innerHTML = `
+      <h3>${data.name}</h3>
+      <div class="date">Добавлено: ${data.createdAt}</div>
     `;
 
-   snapshot.forEach((doc) => {
-  const data = doc.data();
-
-  const card = document.createElement("div");
-  card.className = "card";
-
-  const btn = document.createElement("button");
-  btn.className = "copy-btn";
-  btn.textContent = "📋";
-
-  btn.onclick = async () => {
-    await navigator.clipboard.writeText(data.key);
-    btn.textContent = "✓";
-
-    setTimeout(() => {
-      btn.textContent = "📋";
-    }, 1200);
-  };
-
-  const info = document.createElement("div");
-  info.className = "card-info";
-  info.innerHTML = `
-    <h3>${data.name}</h3>
-    <div class="date">Добавлено: ${data.createdAt}</div>
-  `;
-
-  card.appendChild(btn);
-  card.appendChild(info);
-  vpnList.appendChild(card);
-});
+    card.appendChild(btn);
+    card.appendChild(info);
+    vpnList.appendChild(card);
+  });
 }
+
+// ================= APPS =================
 
 const appsList = document.getElementById("apps-list");
 
-// Функция для загрузки приложений
 async function loadApps() {
-  const q = query(
-    collection(db, "apps"),
-    orderBy("order", "asc")
-  );
-
-  const snapshot = await getDocs(q);
   appsList.innerHTML = "";
 
+  const q = query(collection(db, "apps"), orderBy("order", "asc"));
+  const snapshot = await getDocs(q);
+
   if (snapshot.empty) {
-    appsList.innerHTML = "Приложения не найдены";
+    appsList.textContent = "Приложения не найдены";
     return;
   }
 
   snapshot.forEach(doc => {
     const app = doc.data();
-    console.log(app); // Логируем каждое приложение
 
     const card = document.createElement("div");
     card.className = "app-card";
 
-    // Создаем кнопку "Скачать"
-    const downloadBtn = document.createElement("button");
-    downloadBtn.className = "download-btn";
-    downloadBtn.textContent = "Скачать";
+    const icon = document.createElement("div");
+    icon.className = "app-icon";
+    icon.innerHTML = app.icon
+      ? `<img src="${app.icon}" alt="${app.name}">`
+      : "📦";
 
-    // Когда пользователь нажимает на кнопку, открывается ссылка приложения
-    downloadBtn.onclick = () => {
-      window.open(app.url, "_blank"); // Открываем URL в новой вкладке
-    };
-
-    // Добавляем иконку приложения
-    const appIcon = document.createElement("div");
-    appIcon.className = "app-icon";
-    if (app.icon) {
-      appIcon.innerHTML = `<img src="${app.icon}" alt="${app.name}">`;
-    } else {
-      appIcon.textContent = "📦";
-    }
-
-    // Добавляем информацию о приложении
-    const appInfo = document.createElement("div");
-    appInfo.className = "app-info";
-    appInfo.innerHTML = `
+    const info = document.createElement("div");
+    info.className = "app-info";
+    info.innerHTML = `
       <div class="app-name">${app.name}</div>
       <div class="app-platform">${app.platform}</div>
     `;
 
-    // Добавляем все элементы на карточку
-    card.appendChild(appIcon);
-    card.appendChild(appInfo);
-    card.appendChild(downloadBtn);
+    const btn = document.createElement("button");
+    btn.className = "download-btn";
+    btn.textContent = "Скачать";
+    btn.onclick = () => window.open(app.url, "_blank");
 
-    // Добавляем карточку приложения в список
+    card.appendChild(icon);
+    card.appendChild(info);
+    card.appendChild(btn);
+
     appsList.appendChild(card);
   });
 }
 
-// Загружаем ключи и приложения
+// Load all
 loadKeys();
 loadApps();
