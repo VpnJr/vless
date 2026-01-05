@@ -7,6 +7,14 @@ import {
   orderBy
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+const auth = getAuth();
+signInAnonymously(auth)
+  .then(() => {
+    console.log("Пользователь анонимно вошел в систему");
+  })
+  .catch((error) => {
+    console.error("Ошибка входа:", error);
+  });
 
 // 🔴 ВСТАВЬ СВОИ ДАННЫЕ FIREBASE
 const firebaseConfig = {
