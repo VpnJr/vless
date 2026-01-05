@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// 🔴 Firebase config
+/* ===== Firebase config ===== */
 const firebaseConfig = {
   apiKey: "AIzaSyDyHRXgmRKT2Pm4P4T5PaGERY1aq6l5yr4",
   authDomain: "vless-panel.firebaseapp.com",
@@ -12,16 +12,14 @@ const firebaseConfig = {
   appId: "1:49665298978:web:4f5d9de2f269a19a10307b"
 };
 
-// Init Firebase
+/* ===== Init Firebase ===== */
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Anonymous auth
 const auth = getAuth();
 signInAnonymously(auth).catch(console.error);
 
-// ================= VPN KEYS =================
-
+/* ===== VPN KEYS ===== */
 const vpnList = document.getElementById("vpn-list");
 
 async function loadKeys() {
@@ -41,31 +39,41 @@ async function loadKeys() {
     const card = document.createElement("div");
     card.className = "card";
 
+    const top = document.createElement("div");
+    top.className = "card-top";
+
+    const title = document.createElement("h3");
+    title.textContent = data.name;
+
     const btn = document.createElement("button");
-    btn.className = "copy-btn";
+    btn.className = "action-btn";
     btn.textContent = "📋";
 
     btn.onclick = async () => {
       await navigator.clipboard.writeText(data.key);
       btn.textContent = "✓";
-      setTimeout(() => btn.textContent = "📋", 1200);
+      btn.classList.add("success");
+
+      setTimeout(() => {
+        btn.textContent = "📋";
+        btn.classList.remove("success");
+      }, 1200);
     };
 
-    const info = document.createElement("div");
-    info.className = "card-info";
-    info.innerHTML = `
-      <h3>${data.name}</h3>
-      <div class="date">Добавлено: ${data.createdAt}</div>
-    `;
+    top.appendChild(title);
+    top.appendChild(btn);
 
-    card.appendChild(btn);
-    card.appendChild(info);
+    const date = document.createElement("div");
+    date.className = "date";
+    date.textContent = `Добавлено: ${data.createdAt}`;
+
+    card.appendChild(top);
+    card.appendChild(date);
     vpnList.appendChild(card);
   });
 }
 
-// ================= APPS =================
-
+/* ===== APPS ===== */
 const appsList = document.getElementById("apps-list");
 
 async function loadApps() {
@@ -99,18 +107,17 @@ async function loadApps() {
     `;
 
     const btn = document.createElement("button");
-    btn.className = "download-btn";
-    btn.textContent = "Скачать";
+    btn.className = "action-btn";
+    btn.textContent = "⬇️";
     btn.onclick = () => window.open(app.url, "_blank");
 
     card.appendChild(icon);
     card.appendChild(info);
     card.appendChild(btn);
-
     appsList.appendChild(card);
   });
 }
 
-// Load all
+/* ===== Load data ===== */
 loadKeys();
 loadApps();
