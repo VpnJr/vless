@@ -26,14 +26,15 @@ h1 {
   gap: 16px;
 }
 
+/* ===== VPN карточка ===== */
 .card {
   background: linear-gradient(180deg, #020617, #020617dd);
   border: 1px solid #475569;
   border-radius: 16px;
-  padding: 14px;
+  padding: 14px 16px;
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  gap: 6px;
   transition: transform .15s ease, box-shadow .15s ease;
 }
 
@@ -42,7 +43,14 @@ h1 {
   box-shadow: 0 12px 30px rgba(0,0,0,.35);
 }
 
-.card-info h3 {
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card-top h3 {
   margin: 0;
   font-size: 15px;
   font-weight: 600;
@@ -53,29 +61,36 @@ h1 {
   color: #94a3b8;
 }
 
-/* ===== кнопка копирования ===== */
-.copy-btn {
-  width: 42px;
-  height: 42px;
+/* ===== универсальная кнопка ===== */
+.action-btn {
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   border: none;
   font-size: 18px;
+  cursor: pointer;
   background: linear-gradient(135deg, #7dd3fc, #60a5fa);
   color: #020617;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   transition: all .15s ease;
 }
 
-.copy-btn:hover {
+.action-btn:hover {
   filter: brightness(1.05);
 }
 
-.copy-btn:active {
+.action-btn:active {
   transform: scale(.92);
 }
 
-/* ===== блок скачивания ===== */
+.action-btn.success {
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+}
+
+/* ===== Блок скачивания ===== */
 .downloads {
   max-width: 500px;
   margin: 48px auto 0;
@@ -91,7 +106,7 @@ h1 {
   font-size: 14px;
 }
 
-/* ===== приложения ===== */
+/* ===== Приложения ===== */
 .apps-list {
   display: grid;
   gap: 14px;
@@ -110,7 +125,6 @@ h1 {
   display: flex;
   align-items: center;
   gap: 14px;
-  backdrop-filter: blur(14px);
   transition: transform .25s ease, box-shadow .25s ease;
 }
 
@@ -147,35 +161,8 @@ h1 {
   color: #94a3b8;
 }
 
-.download-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 14px;
-  border: none;
-  font-weight: 600;
-  font-size: 15px;
-  background: linear-gradient(135deg, #7dd3fc, #60a5fa);
-  color: #020617;
-  cursor: pointer;
-  transition: all .2s ease;
-}
-
-.download-btn:hover {
-  filter: brightness(1.05);
-  box-shadow: 0 8px 20px rgba(96,165,250,.45);
-}
-
 /* ===== мобильные ===== */
 @media (max-width: 640px) {
-  .card {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .copy-btn {
-    width: 100%;
-  }
-
   h1 {
     font-size: 22px;
   }
